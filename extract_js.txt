@@ -1,0 +1,70 @@
+INSTRUCTIONS TO CREATE script.js
+=================================
+
+Since the JavaScript code is very large, follow these steps to extract it from your original HTML:
+
+METHOD 1: Manual Extraction (Recommended)
+------------------------------------------
+1. Open your original HTML file in a text editor
+2. Search for "<script>" near the end of the file (before </body>)
+3. Select and copy EVERYTHING between <script> and </script> (do NOT include the tags)
+4. Create a new file named "script.js" in the same folder as index.html
+5. Paste the copied JavaScript code into script.js
+6. Save the file
+
+Your script.js should start with these lines:
+```
+// Global variables
+let currentUser = null;
+let currentDomain = null;
+let currentQuestionIndex = 0;
+```
+
+And end with these lines:
+```
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    showLanding();
+});
+```
+
+METHOD 2: Using Command Line (Windows PowerShell)
+--------------------------------------------------
+If you have the original HTML as a single file, you can extract it using a text editor's "Find and Replace" feature:
+
+1. Open the original HTML in VS Code or Notepad++
+2. Find the <script> tag content
+3. Copy to new file named script.js
+
+IMPORTANT NOTES:
+----------------
+- Do NOT include the opening <script> tag
+- Do NOT include the closing </script> tag
+- Do NOT include the Cloudflare script at the very end
+- ONLY include the main application JavaScript code
+
+FILE SIZE:
+----------
+The script.js file should be approximately 100-150 KB in size and contain around 3000+ lines of JavaScript code including:
+- Global variables
+- Question database with all domains
+- Navigation functions
+- Quiz logic
+- Results analysis
+- Chatbot functionality
+- All event handlers
+
+VERIFICATION:
+-------------
+After creating script.js, open index.html in a browser. If you see:
+✅ "Prodigy Pathways" landing page with animations
+✅ Login and Register buttons work
+✅ Forms submit without errors
+
+Then your separation was successful!
+
+If you see errors in the browser console, double-check that:
+- script.js is in the same directory as index.html
+- The <script src="script.js"></script> line is at the bottom of index.html (before </body>)
+- No syntax errors were introduced during copy/paste
+

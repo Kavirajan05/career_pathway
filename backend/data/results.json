@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "domain": "ai",
+    "difficulty": "easy",
+    "topics": [
+      "Machine Learning",
+      "Neural Networks"
+    ],
+    "timeSpent": 300,
+    "totalQuestions": 5,
+    "percentage": 80,
+    "score": 80,
+    "weakAreas": [
+      "Deep Learning"
+    ],
+    "userId": "test_user_123",
+    "correctAnswers": 4,
+    "created_at": "2025-10-02T15:03:40.433Z"
+  }
+]

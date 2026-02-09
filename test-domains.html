@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Question Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">Domain Question Generation Test</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-blue-600">Programming Questions</h2>
+                <button onclick="testDomain('programming')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Generate Programming Questions
+                </button>
+                <div id="programming-results" class="mt-4"></div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-green-600">AI Questions</h2>
+                <button onclick="testDomain('ai')" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Generate AI Questions
+                </button>
+                <div id="ai-results" class="mt-4"></div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-red-600">Mathematics Questions</h2>
+                <button onclick="testDomain('mathematics')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    Generate Math Questions
+                </button>
+                <div id="mathematics-results" class="mt-4"></div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-purple-600">Science Questions</h2>
+                <button onclick="testDomain('science')" class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+                    Generate Science Questions
+                </button>
+                <div id="science-results" class="mt-4"></div>
+            </div>
+        </div>
+        
+        <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">AI Generation Test</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <button onclick="testAIGeneration()" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 font-semibold">
+                    🤖 Generate AI Questions
+                </button>
+                <button onclick="compareAllDomains()" class="bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-3 rounded-lg hover:from-green-600 hover:to-teal-700 font-semibold">
+                    📊 Compare All Domains
+                </button>
+            </div>
+            <div id="ai-generation-results" class="text-sm text-gray-600 mb-4"></div>
+            <div id="comparison-results" class="text-sm text-gray-600"></div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Test function for different domains
+        function testDomain(domain) {
+            console.log(`Testing domain: ${domain}`);
+            
+            // Set up test environment
+            currentDomain = domain;
+            quizSettings = {
+                numberOfQuestions: 3,
+                difficulty: 'easy'
+            };
+            currentUser = 'TestUser';
+            
+            // Get questions for this domain
+            const questions = getQuestionsForDomain(domain, 'easy');
+            const resultsDiv = document.getElementById(`${domain}-results`);
+            
+            if (questions && questions.length > 0) {
+                let html = `<div class="text-sm">`;
+                html += `<p class="font-medium text-green-600">Found ${questions.length} questions:</p>`;
+                questions.slice(0, 3).forEach((q, index) => {
+                    html += `<div class="mt-2 p-2 bg-gray-50 rounded">`;
+                    html += `<strong>Q${index + 1}:</strong> ${q.question}<br>`;
+                    html += `<span class="text-xs text-gray-500">Topic: ${q.topic}</span>`;
+                    html += `</div>`;
+                });
+                html += `</div>`;
+                resultsDiv.innerHTML = html;
+            } else {
+                resultsDiv.innerHTML = `<p class="text-red-500 text-sm">No questions found for ${domain} domain</p>`;
+            }
+            
+            // Update comparison
+            updateComparison();
+        }
+        
+        // Update comparison results
+        function updateComparison() {
+            const domains = ['programming', 'ai', 'mathematics', 'science'];
+            let comparisonHtml = '<h3 class="font-medium mb-2">Question Distribution:</h3>';
+            
+            domains.forEach(domain => {
+                const questions = getQuestionsForDomain(domain, 'easy');
+                const count = questions ? questions.length : 0;
+                const color = count > 0 ? 'text-green-600' : 'text-red-500';
+                comparisonHtml += `<p class="${color}">${domain.charAt(0).toUpperCase() + domain.slice(1)}: ${count} questions</p>`;
+            });
+            
+            document.getElementById('comparison-results').innerHTML = comparisonHtml;
+        }
+        
+        // Test AI question generation
+        async function testAIGeneration() {
+            const resultsDiv = document.getElementById('ai-generation-results');
+            resultsDiv.innerHTML = '<p class="text-blue-600 font-medium">🤖 Generating AI questions for all domains...</p>';
+            
+            const domains = ['programming', 'ai', 'mathematics', 'science'];
+            const difficulties = ['easy', 'medium', 'hard'];
+            let html = '<h3 class="font-bold mb-3 text-lg">🧠 AI-Generated Questions by Domain:</h3>';
+            
+            for (const domain of domains) {
+                html += `<div class="border-l-4 border-${getDomainColor(domain)}-500 pl-4 mb-6">`;
+                html += `<h4 class="font-semibold text-${getDomainColor(domain)}-600 mb-2 capitalize">${domain} Domain</h4>`;
+                
+                for (const difficulty of difficulties) {
+                    try {
+                        // Set up test environment
+                        currentDomain = domain;
+                        quizSettings = { numberOfQuestions: 2, difficulty: difficulty };
+                        currentUser = 'AITestUser';
+                        
+                        // Generate AI questions
+                        const aiQuestions = await generateDomainSpecificQuestions(domain, difficulty, 2);
+                        
+                        html += `<div class="mb-3">`;
+                        html += `<h5 class="font-medium text-gray-700 text-sm">${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} Questions:</h5>`;
+                        
+                        if (aiQuestions && aiQuestions.length > 0) {
+                            aiQuestions.slice(0, 2).forEach((q, index) => {
+                                html += `<div class="ml-4 mt-2 p-2 bg-gray-50 rounded text-xs">`;
+                                html += `<strong>Q${index + 1}:</strong> ${q.question}<br>`;
+                                html += `<span class="text-gray-500">Topic: ${q.topic}</span>`;
+                                html += `<span class="ml-2 text-green-600">${q.generated ? '✨ AI-Generated' : '📚 Pre-defined'}</span>`;
+                                html += `</div>`;
+                            });
+                        } else {
+                            html += `<p class="ml-4 text-orange-500 text-xs">No questions generated for ${difficulty}</p>`;
+                        }
+                        
+                        html += `</div>`;
+                    } catch (error) {
+                        console.error(`Error generating ${difficulty} ${domain} questions:`, error);
+                        html += `<p class="ml-4 text-red-500 text-xs">Error generating ${difficulty} questions</p>`;
+                    }
+                }
+                
+                html += `</div>`;
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        // Compare all domains
+        async function compareAllDomains() {
+            const domains = ['programming', 'ai', 'mathematics', 'science'];
+            let comparisonHtml = '<h3 class="font-bold mb-3">📊 Domain Question Analysis:</h3>';
+            comparisonHtml += '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">';
+            
+            for (const domain of domains) {
+                const questions = getQuestionsForDomain(domain, 'easy');
+                const count = questions ? questions.length : 0;
+                const color = getDomainColor(domain);
+                
+                comparisonHtml += `<div class="border-2 border-${color}-200 rounded-lg p-3">`;
+                comparisonHtml += `<h4 class="font-semibold text-${color}-600 capitalize mb-2">${domain}</h4>`;
+                comparisonHtml += `<p class="text-sm">Base Questions: <span class="font-bold text-${color}-800">${count}</span></p>`;
+                comparisonHtml += `<p class="text-xs text-gray-500 mt-1">+ AI Generation Available</p>`;
+                comparisonHtml += `</div>`;
+            }
+            
+            comparisonHtml += '</div>';
+            document.getElementById('comparison-results').innerHTML = comparisonHtml;
+        }
+        
+        // Get domain color for styling
+        function getDomainColor(domain) {
+            const colors = {
+                programming: 'blue',
+                ai: 'green', 
+                mathematics: 'red',
+                science: 'purple'
+            };
+            return colors[domain] || 'gray';
+        }
+        
+        // Initialize comparison on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateComparison();
+        });
+    </script>
+</body>
+</html>

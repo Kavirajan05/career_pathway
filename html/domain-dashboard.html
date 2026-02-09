@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domain Dashboard - Prodigy Pathways</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/domain-dashboard.css" />
+  </head>
+  <body class="min-h-screen bg-gray-50">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center space-x-4">
+            <h1 class="text-2xl font-bold text-purple-600">Prodigy Pathways</h1>
+            <div
+              id="domainBadge"
+              class="px-4 py-2 bg-purple-100 text-purple-700 rounded-full font-semibold"
+            >
+              💻 Programming
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <span id="userName" class="text-gray-700 font-medium"
+              >Welcome, User</span
+            >
+            <button
+              onclick="showLanding()"
+              class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition"
+            >
+              Change Domain
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Welcome Section -->
+      <div
+        class="bg-gradient-to-r from-purple-600 to-blue-500 rounded-2xl p-8 mb-8 text-white"
+      >
+        <h2 class="text-3xl font-bold mb-2">
+          Welcome to your <span id="domainName">Programming</span> Learning Hub!
+        </h2>
+        <p class="text-lg opacity-90" id="domainDescription">
+          Your personalized dashboard for mastering your chosen domain
+        </p>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+        <div
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer"
+          onclick="scrollToSection('internships')"
+        >
+          <div class="text-3xl mb-2">💼</div>
+          <h3 class="font-bold text-gray-800">Internship Calendar</h3>
+          <p class="text-sm text-gray-600">Find opportunities</p>
+        </div>
+        <div
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer"
+          onclick="scrollToSection('interview-prep')"
+        >
+          <div class="text-3xl mb-2">🎯</div>
+          <h3 class="font-bold text-gray-800">Interview Prep</h3>
+          <p class="text-sm text-gray-600">Get interview ready</p>
+        </div>
+        <div
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer"
+          onclick="scrollToSection('courses')"
+        >
+          <div class="text-3xl mb-2">📚</div>
+          <h3 class="font-bold text-gray-800">Courses</h3>
+          <p class="text-sm text-gray-600">Learn systematically</p>
+        </div>
+        <div
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer"
+          onclick="scrollToSection('roadmap')"
+        >
+          <div class="text-3xl mb-2">🗺️</div>
+          <h3 class="font-bold text-gray-800">Roadmap</h3>
+          <p class="text-sm text-gray-600">Your learning path</p>
+        </div>
+        <div
+          class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer"
+          onclick="showResume()"
+        >
+          <div class="text-3xl mb-2">📝</div>
+          <h3 class="font-bold text-gray-800">Build Resume</h3>
+          <p class="text-sm text-gray-600">Create your resume</p>
+        </div>
+      </div>
+
+      <!-- Internship Calendar Section -->
+      <section id="internships" class="mb-12">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <!-- Section Header -->
+          <div
+            class="bg-gradient-to-r from-green-600 to-teal-500 p-6 text-white"
+          >
+            <h2 class="text-3xl font-bold mb-2">💼 Internship Calendar</h2>
+            <p class="text-lg opacity-90">
+              Active internship opportunities - Apply now!
+            </p>
+          </div>
+
+          <!-- Internship List -->
+          <div class="p-6">
+            <div
+              id="internshipsList"
+              class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            >
+              <!-- Dynamic content loaded by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interview Preparation Section with Tabs -->
+      <section id="interview-prep" class="mb-12">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <!-- Section Header -->
+          <div
+            class="bg-gradient-to-r from-purple-600 to-blue-500 p-6 text-white"
+          >
+            <h2 class="text-3xl font-bold mb-2">
+              🎯 Interview Preparation Hub
+            </h2>
+            <p class="text-lg opacity-90">
+              Everything you need to crack your interviews
+            </p>
+          </div>
+
+          <!-- Tab Navigation -->
+          <div class="flex border-b bg-gray-50">
+            <button
+              onclick="switchInterviewTab('leetcode')"
+              class="interview-tab-btn active flex-1 px-6 py-4 font-semibold text-gray-700 hover:bg-white transition"
+              data-tab="leetcode"
+            >
+              <span class="text-xl mr-2">💪</span>
+              LeetCode Problems
+            </button>
+            <button
+              onclick="switchInterviewTab('experiences')"
+              class="interview-tab-btn flex-1 px-6 py-4 font-semibold text-gray-700 hover:bg-white transition"
+              data-tab="experiences"
+            >
+              <span class="text-xl mr-2">🎥</span>
+              Interview Experiences
+            </button>
+            <button
+              onclick="switchInterviewTab('placement')"
+              class="interview-tab-btn flex-1 px-6 py-4 font-semibold text-gray-700 hover:bg-white transition"
+              data-tab="placement"
+            >
+              <span class="text-xl mr-2">🚀</span>
+              Placement Guide
+            </button>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="p-6">
+            <!-- LeetCode Tab -->
+            <div id="tab-leetcode" class="interview-tab-content active">
+              <div class="flex justify-between items-center mb-6">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-800">
+                    Top Interview Questions
+                  </h3>
+                  <p class="text-sm text-gray-600 mt-1">
+                    Practice the most frequently asked coding problems
+                  </p>
+                </div>
+                <div class="flex space-x-2">
+                  <button
+                    onclick="filterLeetCode('all')"
+                    class="leetcode-filter-btn active px-4 py-2 rounded-lg"
+                  >
+                    All
+                  </button>
+                  <button
+                    onclick="filterLeetCode('easy')"
+                    class="leetcode-filter-btn px-4 py-2 rounded-lg"
+                  >
+                    Easy
+                  </button>
+                  <button
+                    onclick="filterLeetCode('medium')"
+                    class="leetcode-filter-btn px-4 py-2 rounded-lg"
+                  >
+                    Medium
+                  </button>
+                  <button
+                    onclick="filterLeetCode('hard')"
+                    class="leetcode-filter-btn px-4 py-2 rounded-lg"
+                  >
+                    Hard
+                  </button>
+                </div>
+              </div>
+              <div id="leetcodeList" class="space-y-4">
+                <!-- Dynamic content loaded by JavaScript -->
+              </div>
+              <div class="mt-6 text-center">
+                <a
+                  href="https://leetcode.com/problemset/"
+                  target="_blank"
+                  class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-lg transition"
+                >
+                  View All Problems on LeetCode →
+                </a>
+              </div>
+            </div>
+
+            <!-- Interview Experiences Tab -->
+            <div id="tab-experiences" class="interview-tab-content hidden">
+              <div class="mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">
+                  Real Interview Experiences
+                </h3>
+                <p class="text-sm text-gray-600">
+                  Learn from successful candidates and understand what to expect
+                </p>
+              </div>
+              <div
+                id="interviewExperienceList"
+                class="grid grid-cols-1 md:grid-cols-2 gap-6"
+              >
+                <!-- Dynamic content loaded by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Placement Guide Tab -->
+            <div id="tab-placement" class="interview-tab-content hidden">
+              <div class="mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">
+                  How to Apply & Prepare
+                </h3>
+                <p class="text-sm text-gray-600">
+                  Step-by-step guide to securing your dream job
+                </p>
+              </div>
+
+              <!-- Application Process -->
+              <div class="mb-8">
+                <h4 class="text-lg font-bold text-purple-600 mb-4">
+                  📝 Application Process
+                </h4>
+                <div id="applicationSteps" class="space-y-3">
+                  <!-- Dynamic content loaded by JavaScript -->
+                </div>
+              </div>
+
+              <!-- Top Companies -->
+              <div class="mb-8">
+                <h4 class="text-lg font-bold text-purple-600 mb-4">
+                  🏢 Top Companies Hiring
+                </h4>
+                <div
+                  id="topCompanies"
+                  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                >
+                  <!-- Dynamic content loaded by JavaScript -->
+                </div>
+              </div>
+
+              <!-- Preparation Timeline -->
+              <div class="mb-8">
+                <h4 class="text-lg font-bold text-purple-600 mb-4">
+                  ⏱️ 3-Month Preparation Timeline
+                </h4>
+                <div id="preparationTimeline" class="space-y-4">
+                  <!-- Dynamic content loaded by JavaScript -->
+                </div>
+              </div>
+
+              <!-- Important Tips -->
+              <div
+                class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6"
+              >
+                <h4 class="text-lg font-bold text-orange-600 mb-4">
+                  💡 Key Success Tips
+                </h4>
+                <ul id="placementTips" class="space-y-2">
+                  <!-- Dynamic content loaded by JavaScript -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Courses Section -->
+      <section id="courses" class="mb-12">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">
+            📚 Recommended Courses
+          </h2>
+        </div>
+        <div
+          id="coursesList"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <!-- Dynamic content loaded by JavaScript -->
+        </div>
+      </section>
+
+      <!-- YouTube Resources Section -->
+      <section id="youtube" class="mb-12">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">📺 YouTube Resources</h2>
+        </div>
+        <div id="youtubeList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Dynamic content loaded by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Learning Roadmap Section -->
+      <section id="roadmap" class="mb-12">
+        <div class="bg-white rounded-2xl p-8 shadow-md">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            🗺️ Learning Roadmap
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <h3 class="text-lg font-bold text-green-600 mb-3">🟢 Beginner</h3>
+              <ul id="roadmapBeginner" class="space-y-2 text-gray-700">
+                <!-- Dynamic content -->
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-orange-600 mb-3">
+                🟡 Intermediate
+              </h3>
+              <ul id="roadmapIntermediate" class="space-y-2 text-gray-700">
+                <!-- Dynamic content -->
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-red-600 mb-3">🔴 Advanced</h3>
+              <ul id="roadmapAdvanced" class="space-y-2 text-gray-700">
+                <!-- Dynamic content -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Books Section -->
+      <section id="books" class="mb-12">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">📖 Recommended Books</h2>
+        </div>
+        <div
+          id="booksList"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          <!-- Dynamic content loaded by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Interview Tips Section -->
+      <section id="tips" class="mb-12">
+        <div
+          class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 text-white"
+        >
+          <h2 class="text-2xl font-bold mb-4">💡 Interview Preparation Tips</h2>
+          <ul id="tipsList" class="space-y-3">
+            <!-- Dynamic content loaded by JavaScript -->
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/domain-resources.js"></script>
+    <script src="../js/domain-dashboard.js"></script>
+    <script src="../js/script.js"></script>
+  </body>
+</html>
